@@ -20,5 +20,8 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": "off",
     "import/extensions": "off",
     "import/prefer-default-export": "off"
-  }
+  },
+  "env": {
+    "jest": true
+}
 };
