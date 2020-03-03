@@ -9,20 +9,30 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "yarn build-ts && yarn lint",
     "dev:watch": "nodemon -r ts-node src/index.ts",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "db:migrate": "sequelize db:migrate",
+    "db:migrate:undo": "sequelize db:migrate:undo"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
     "@types/dotenv": "^8.2.0",
     "@types/node": "^13.7.6",
     "@types/redis": "^2.8.16",
+    "@types/bluebird": "^3.5.29",
     "apollo-server": "^2.10.1",
+    "@types/validator": "^12.0.1",
     "dotenv": "^8.2.0",
     "eslint-plugin-react": "^7.18.3",
     "graphql": "^14.6.0",
     "redis": "^3.0.2",
     "typescript": "^3.8.2",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "sequelize": "^5.21.5",
+    "sequelize-cli": "^5.5.1",
+    "reflect-metadata": "^0.1.13",
+    "sequelize-typescript": "^1.1.0",
+    "pg": "^7.18.2",
+    "pg-hstore": "^2.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

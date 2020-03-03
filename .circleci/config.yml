@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:12.13.0
+      - image: circleci/postgres:latest
     steps:
       - checkout
       # Download and cache dependencies

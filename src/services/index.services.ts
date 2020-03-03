@@ -1,5 +1,5 @@
-import Asset from './asset.services';
+import AssetService from './asset.services';
 
 export default {
-  Asset,
+  AssetService,
 };
