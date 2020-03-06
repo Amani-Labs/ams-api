@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "yarn build && node dist/index.js",
     "build-ts": "tsc",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "yarn build-ts && yarn lint",

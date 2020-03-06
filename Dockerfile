@@ -1,13 +1,28 @@
+# Use the official image as a parent image
 FROM node:current-slim
 
-ENV PORT 5000
+# Install yarn package
+RUN apt-get update && apt-get install -y yarn
 
-EXPOSE 5000
+# Set the working directory
+WORKDIR /usr/src/app
 
-COPY package.json package.json
+# Copy the file from your host to your current location
+COPY package.json .
+
+# Run the command inside your image filesystem
 RUN yarn install
 
-COPY . .
-RUN yarn run build
+# Inform Docker that the container is listening on the specified port at runtime.
+EXPOSE 5000
 
-CMD ["node", "dist/"]
+# set container env backend service port 
+ENV PORT 5000
+
+# Copy the rest of your app's source code from your host to your image filesystem.
+COPY . .
+
+ADD entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
+CMD ["/entrypoint.sh"]

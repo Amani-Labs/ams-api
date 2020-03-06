@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ams-service
+spec:
+  selector:
+    app: web-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ams-api
+  labels:
+    app: web-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web-api
+  template:
+    metadata:
+      labels:
+        app: web-api
+    spec:
+      containers:
+        - name: redis
+          image: redis:latest
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 6379
+        - name: postgres
+          image: launcher.gcr.io/google/postgresql9
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: "POSTGRES_DB"
+              value: "ams"
+            - name: "POSTGRES_USER"
+              value: "postgres"
+            - name: "POSTGRES_PASSWORD"
+              value: "12345"
+        - name: ams-api
+          image: gcr.io/asset-management-system-270007/ams-api:${CIRCLE_SHA1}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          env:
+            - name: "REDIS_URL"
+              value: redis://localhost:6379
+            - name: "DB_URL"
+              value: "postgres://postgres:12345@127.0.0.1:5432/ams?charset=UTF8"

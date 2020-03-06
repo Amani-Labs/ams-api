@@ -9,16 +9,19 @@
     "outDir": "dist",
     "baseUrl": "./src",
     "strict": true,
-    "types": ["jest","node"],
-    "allowJs":true,
+    "types": [
+      "jest",
+      "node"
+    ],
+    "allowJs": true,
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "paths": {
-        "*": [
-            "node_modules/*",
-            "src/types/*"
-        ]
+      "*": [
+        "node_modules/*",
+        "src/types/*"
+      ]
     }
   },
   "include": [
@@ -27,4 +30,4 @@
   "exclude": [
     "node_modules"
   ]
-} 
+}
