@@ -1,9 +1,9 @@
-import assets from '../data';
+import { Asset } from '../sequelize/models/asset.models';
 
-class Asset {
-  static all() {
-    return assets;
+class AssetService {
+  static async getAllAssest() {
+    return Asset.findAll();
   }
 }
 
-export default Asset;
+export default AssetService;

@@ -10,7 +10,7 @@ export class RedisCache {
 
   private delAsync: (key: string) => Promise<number>;
 
-  private flushallAsync: () => Promise<void>;
+  private flushallAsync: () => Promise<any>;
 
   constructor(redisClient: Redis.RedisClient, private readonly cacheExpireTime = 3600) {
     this.client = redisClient;

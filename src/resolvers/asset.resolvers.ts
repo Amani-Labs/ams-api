@@ -1,8 +1,8 @@
-import Model from '../services/index.services';
+import AssetService from '../services/asset.services';
 
 const assetResolvers = {
   Query: {
-    assets: () => Model.Asset.all(),
+    assets: () => AssetService.getAllAssest,
   },
 };
 

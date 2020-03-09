@@ -1,9 +1,11 @@
 import { ApolloServer } from 'apollo-server';
 import winston from 'winston';
 import dotenv from 'dotenv';
-import resolvers from './resolvers/index.resolvers';
-import { typeDefs } from './typeDefs/index.typedefs';
+import resolvers from './resolvers';
+import { typeDefs } from './typeDefs';
 import { logger } from './config/logging';
+import './config/connectDb';
+
 
 dotenv.config();
 logger();

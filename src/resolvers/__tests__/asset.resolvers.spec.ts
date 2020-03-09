@@ -1,9 +1,9 @@
 import resolver from '../asset.resolvers';
-import data from '../../data';
 
 describe('Test Asset Resolver', () => {
+  const spy = jest.spyOn(resolver.Query, 'assets');
   it('Should return all assets', () => {
-    const assets = resolver.Query.assets();
-    expect(assets).toBe(data);
+    resolver.Query.assets();
+    expect(spy).toHaveBeenCalled();
   });
 });
