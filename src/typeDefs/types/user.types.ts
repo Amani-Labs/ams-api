@@ -8,6 +8,10 @@ type User {
     userName: String!
     email: String!
     password: String!
-    avatar: String
+    profilePic: String
+}
+
+type Token {
+    token: String
 }
 `;
