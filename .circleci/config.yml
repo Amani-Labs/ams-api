@@ -1,9 +1,18 @@
-version: 2
+version: 2.1
+orbs:
+  gcp-gcr: circleci/gcp-gcr@0.6.1
+  cloudrun: circleci/gcp-cloud-run@1.0.0
 jobs:
   build:
+    environment:
+      CC_TEST_REPORTER_ID: 540fea75bbb667c00540fcf34720c5204d51d7da947bddbbd1df9ae7b75313ef
     docker:
       - image: circleci/node:12.13.0
-      - image: circleci/postgres:latest
+      - image: circleci/postgres:9.6.2-alpine
+        environment:
+          POSTGRES_USER: ${POSTGRES_USER}
+          POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+          POSTGRES_DB: ams
     steps:
       - checkout
       # Download and cache dependencies
@@ -20,6 +29,9 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: Run migrations
+          command: yarn db:migrate
       # Download code climate reporter.
       - run:
           name: Install Code Climate Test Reporter
@@ -28,9 +40,89 @@ jobs:
             chmod +x ./cc-test-reporter
       - run:
           name: Run tests
-          environment: 
-            - CC_TEST_REPORTER_ID: 540fea75bbb667c00540fcf34720c5204d51d7da947bddbbd1df9ae7b75313ef
           command: |
             ./cc-test-reporter before-build
             yarn run test
             ./cc-test-reporter after-build --exit-code $?
+  deploy_to_staging:
+    docker:
+      - image: google/cloud-sdk
+    environment:
+      PROJECT_NAME: "ams"
+      GOOGLE_PROJECT_ID: "asset-management-system-270007"
+      GOOGLE_COMPUTE_ZONE: "us-central1-c"
+      GOOGLE_CLUSTER_NAME: "staging"
+    steps:
+      - checkout
+      - run:
+          name: Setup Google Cloud SDK
+          command: |
+            apt-get install -qq -y gettext
+            echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+            gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
+      - setup_remote_docker
+      - run:
+          name: Docker build and push
+          command: |
+            docker build -t ams-api .
+            docker tag ams-api gcr.io/asset-management-system-270007/ams-api:${CIRCLE_SHA1}
+            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+            docker push gcr.io/asset-management-system-270007/ams-api:${CIRCLE_SHA1}
+      - run:
+          name: Deploy to Kubernetes
+          command: |
+            envsubst < ${HOME}/project/k8s.yml > ${HOME}/patched_k8s.yml
+            kubectl apply -f ${HOME}/patched_k8s.yml
+            kubectl rollout status deployment/ams-api
+  deploy_to_production:
+    docker:
+      - image: google/cloud-sdk
+    environment:
+      PROJECT_NAME: "ams"
+      GOOGLE_PROJECT_ID: "asset-management-system-270007"
+      GOOGLE_COMPUTE_ZONE: "asia-east1-a"
+      GOOGLE_CLUSTER_NAME: "ams"
+    steps:
+      - checkout
+      - run:
+          name: Setup Google Cloud SDK
+          command: |
+            apt-get install -qq -y gettext
+            echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+            gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
+      - setup_remote_docker
+      - run:
+          name: Docker build and push
+          command: |
+            docker build -t ams-api .
+            docker tag ams-api gcr.io/asset-management-system-270007/ams-api:${CIRCLE_SHA1}
+            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+            docker push gcr.io/asset-management-system-270007/ams-api:${CIRCLE_SHA1}
+      - run:
+          name: Deploy to Kubernetes
+          command: |
+            envsubst < ${HOME}/project/k8s.yml > ${HOME}/patched_k8s.yml
+            kubectl apply -f ${HOME}/patched_k8s.yml
+            kubectl rollout status deployment/ams-api
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy_to_staging:
+          requires:
+            - build
+          filters:
+            branches:
+              only: develop
+      - deploy_to_production:
+          filters:
+            branches:
+              only: master
