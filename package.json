@@ -9,9 +9,9 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "yarn build-ts && yarn lint",
     "dev:watch": "nodemon -r ts-node src/index.ts",
-    "test": "jest --coverage",
+    "test": "NODE_ENV=test jest --coverage",
     "db:migrate": "sequelize db:migrate",
-    "db:migrate:undo": "sequelize db:migrate:undo"
+    "db:migrate:undo": "sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",

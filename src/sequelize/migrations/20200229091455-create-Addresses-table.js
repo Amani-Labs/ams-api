@@ -1,37 +1,29 @@
-module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('assets', {
+module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('Addresses', {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER.UNSIGNED,
   },
-  code: {
-    allowNull: false,
+  Province: {
     type: DataTypes.STRING,
-  },
-  name: {
     allowNull: false,
+  },
+  District: {
     type: DataTypes.STRING,
-  },
-  description: {
     allowNull: false,
+  },
+  Sector: {
     type: DataTypes.STRING,
-  },
-  state: {
     allowNull: false,
+  },
+  Cell: {
     type: DataTypes.STRING,
-  },
-  recyclable: {
     allowNull: false,
-    type: DataTypes.BOOLEAN,
   },
-  storeId: {
+  Village: {
+    type: DataTypes.STRING,
     allowNull: false,
-    references: {
-      key: 'id',
-      model: 'stores',
-    },
-    type: DataTypes.INTEGER.UNSIGNED,
   },
   createdAt: {
     allowNull: false,
@@ -46,6 +38,8 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('a
     type: DataTypes.DATE,
   },
 },
-{ charset: 'utf8' });
+{
+  charset: 'utf8',
+});
 
-module.exports.down = (queryInterface) => queryInterface.dropTable('assets');
+module.exports.down = (queryInterface) => queryInterface.dropTable('Addresses');

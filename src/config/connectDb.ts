@@ -3,9 +3,12 @@ import 'dotenv/config';
 import winston from 'winston';
 import { models } from '../sequelize/models';
 
-const { DB_URL } = process.env;
 
-const sequelize = new Sequelize(DB_URL!, {
+const { DB_URL, TEST_DB_URL, NODE_ENV } = process.env;
+
+const db = NODE_ENV === 'test' ? TEST_DB_URL : DB_URL;
+
+const sequelize = new Sequelize(db!, {
   dialectOptions: {
     charset: 'utf8',
     multipleStatements: true,
@@ -24,5 +27,6 @@ const verify = async () => {
 };
 
 verify();
+
 
 export default sequelize;

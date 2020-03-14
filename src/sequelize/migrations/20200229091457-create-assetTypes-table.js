@@ -1,29 +1,17 @@
-module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('Users', {
+module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('AssetTypes', {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER.UNSIGNED,
   },
-  firstName: {
-    allowNull: false,
+  name: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
-  lastName: {
-    allowNull: false,
+  description: {
     type: DataTypes.STRING,
-  },
-  userName: {
     allowNull: false,
-    type: DataTypes.STRING,
-  },
-  email: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  password: {
-    allowNull: false,
-    type: DataTypes.STRING,
   },
   createdAt: {
     allowNull: false,
@@ -42,8 +30,4 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('U
   charset: 'utf8',
 });
 
-
-module.exports.down = (queryInterface) => Promise.all([
-  queryInterface.dropTable('Users'),
-  queryInterface.dropAllEnums(),
-]);
+module.exports.down = (queryInterface) => queryInterface.dropTable('AssetTypes');
