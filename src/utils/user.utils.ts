@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import 'dotenv/config';
-import { ApolloError, ForbiddenError } from 'apollo-server';
+import { ForbiddenError, ApolloError } from 'apollo-server';
 import { Iuser } from '../interfaces/user.interfaces';
 import { Role } from '../sequelize/models/role.models';
+import { RoleService } from '../services/role.services';
 
 const { JWT_SECRET_KEY } = process.env;
 
@@ -23,6 +24,7 @@ export const generateToken = (user: Iuser) => jwt.sign(
   { expiresIn: '1d' },
 );
 
+
 export const unHashPassword = (
   hashedPassword: string,
   compare: string,
@@ -40,14 +42,14 @@ export const decodeToken = async (token: string) => {
   });
   return user;
 };
-export const checkSingleRole = async (role, requiredRole) => {
+const checkSingleRole = async (role, requiredRole) => {
   if (role!.name !== requiredRole) {
     throw new ForbiddenError('Sorry you\'re not authorized to perform this action');
   }
   return true;
 };
 
-export const checkCombinedRoles = async (role, requiredRole) => {
+const checkCombinedRoles = async (role, requiredRole) => {
   if (!Array.isArray(requiredRole)) {
     throw new ApolloError('Sorry supply a valid role');
   }
@@ -58,8 +60,7 @@ export const checkCombinedRoles = async (role, requiredRole) => {
 
 export const checkUserRole = async (token, requiredRole) => {
   const { roleId } = await decodeToken(token);
-  // Update this method to use role-service .
-  const role = await Role.findOne({ where: { id: roleId } });
+  const role = await RoleService.getRoleById(roleId);
   if (typeof requiredRole === 'string') {
     await checkSingleRole(role, requiredRole);
   } else {

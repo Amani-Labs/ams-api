@@ -1,16 +1,17 @@
 import { gql } from 'apollo-server';
 
 export const institutionType = gql`
-    enum Type {
-        health
-        educational
-        other
-    }
-    type Institution{
+ enum instType {
+    health,
+    educational,
+    insuarance,
+    others
+  }
+  scalar JSON
+ type Institution {
         id: ID!
         name: String!
-        type: Type!
-        addressId: ID!
-        users: [User]!
-    }
+        type: instType!
+        address: JSON!
+  }
 `;

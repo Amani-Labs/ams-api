@@ -63,3 +63,16 @@ export const updateAddressSchema = Joi.object().keys({
   cell: Joi.string().min(3),
   village: Joi.string().min(3),
 });
+
+export const createInstitutionSchema = Joi.object().keys({
+  name: Joi.string().required().min(3),
+  type: Joi.string().required().min(3),
+  addressId: Joi.number().required(),
+});
+
+export const updateInstitutionSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  name: Joi.string().min(3),
+  type: Joi.string().min(3),
+  addressId: Joi.number(),
+});
