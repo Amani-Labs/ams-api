@@ -4,7 +4,6 @@ import {
 } from 'sequelize-typescript';
 
 import { Asset } from './asset.models';
-import { User } from './user.models';
 import { Address } from './address.models';
 
 @Table({

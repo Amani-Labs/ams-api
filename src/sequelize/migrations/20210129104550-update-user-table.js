@@ -11,10 +11,11 @@ module.exports = {
     queryInterface.addColumn('Users', 'gender', {
       type: Sequelize.DataTypes.ENUM('male', 'female', 'trans'),
       defaultValue: 'male',
+      allowNull: false,
     }, { transaction: t }),
     queryInterface.addColumn('Users', 'phoneNo', {
       type: Sequelize.DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     }, { transaction: t }),
     queryInterface.addColumn('Users', 'profilePic', {
       type: Sequelize.DataTypes.STRING,

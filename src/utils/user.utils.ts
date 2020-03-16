@@ -20,7 +20,6 @@ export const generateToken = (user: Iuser) => jwt.sign(
   { expiresIn: '1d' },
 );
 
-
 export const unHashPassword = (
   hashedPassword: string,
   compare: string,
