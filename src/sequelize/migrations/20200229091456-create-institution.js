@@ -1,4 +1,4 @@
-module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('stores', {
+module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('Institutions', {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -9,9 +9,18 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('s
     allowNull: false,
     type: DataTypes.STRING,
   },
-  address: {
+  type: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM('health', 'educational', 'others'),
+    defaultValue: 'health',
+  },
+  addressId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: { tableName: 'Addresses' },
+      key: 'id',
+    },
+    allowNull: false,
   },
   createdAt: {
     allowNull: false,
@@ -27,4 +36,4 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('s
   },
 }, { charset: 'utf8' });
 
-module.exports.down = (queryInterface) => queryInterface.dropTable('stores');
+module.exports.down = (queryInterface) => queryInterface.dropTable('Institutions');

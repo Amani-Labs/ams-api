@@ -1,19 +1,19 @@
 /* eslint-disable import/no-cycle */
 import {
-  Column, DataType, HasMany, Model, Table,
+  Column, DataType, Model, Table, BelongsTo, ForeignKey,
 } from 'sequelize-typescript';
 
-import { Asset } from './asset.models';
+import { User } from './user.models';
 
 @Table({
   defaultScope: {
     attributes: { exclude: ['createdAt'] },
   },
   paranoid: true,
-  tableName: 'stores',
+  tableName: 'Roles',
 })
 
-export class Store extends Model<Store> {
+export class Role extends Model<Role> {
   @Column({
     allowNull: false,
     autoIncrement: true,
@@ -32,8 +32,8 @@ export class Store extends Model<Store> {
     allowNull: false,
     type: DataType.STRING,
   })
-  address!: string;
+  description!: string;
 
-  @HasMany(() => Asset)
-  assets!: Asset[]
+  @BelongsTo(() => User, 'id')
+  user!: User
 }

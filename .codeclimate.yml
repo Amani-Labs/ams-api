@@ -2,3 +2,5 @@ version: "2"
 exclude_patterns:
   - '**/node_modules'
   - '**/*.spec.ts'
+  - './src/sequelize/models'
+  - './src/sequelize/migrations'

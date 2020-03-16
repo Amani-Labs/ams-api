@@ -12,7 +12,7 @@ jobs:
         environment:
           POSTGRES_USER: ${POSTGRES_USER}
           POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-          POSTGRES_DB: ams
+          POSTGRES_DB: testdb
     steps:
       - checkout
       # Download and cache dependencies

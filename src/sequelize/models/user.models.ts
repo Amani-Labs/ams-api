@@ -1,13 +1,18 @@
+/* eslint-disable import/no-cycle */
 import {
-  Column, DataType, Model, Table,
+  Column, DataType, HasMany, ForeignKey, Model, Table, HasOne, BelongsTo,
 } from 'sequelize-typescript';
+import { Asset } from './asset.models';
+import { Institution } from './institution.models';
+import { Role } from './role.models';
+import { Request } from './requests.models';
 
 @Table({
   defaultScope: {
     attributes: { exclude: ['deletedAt'] },
   },
   paranoid: true,
-  tableName: 'users',
+  tableName: 'Users',
 })
 
 export class User extends Model<User> {
@@ -18,6 +23,10 @@ export class User extends Model<User> {
     type: DataType.INTEGER.UNSIGNED,
   })
   id!: string;
+
+  @ForeignKey(() => Role)
+  @Column
+  roleId!: number;
 
   @Column({
     allowNull: false,
@@ -47,13 +56,41 @@ export class User extends Model<User> {
     allowNull: false,
     type: DataType.STRING,
   })
-  password!: string
+  password!: string;
 
   @Column({
     allowNull: false,
     type: DataType.STRING,
   })
-  avatar!: string;
+  gender!: string;
+
+  @Column({
+    allowNull: true,
+    type: DataType.STRING,
+  })
+  phoneNo!: string;
+
+  @Column({
+    allowNull: true,
+    type: DataType.STRING,
+  })
+  profilePic!: string;
+
+  @ForeignKey(() => Institution)
+  @Column
+  institutionId!: number;
+
+  @HasMany(() => Asset)
+  createdAsset!: Asset;
+
+  @HasOne(() => Role, 'id')
+  roleType!: Role;
+
+  @BelongsTo(() => Institution, 'id')
+  institution!: Institution;
+
+  @HasMany(() => Request)
+  requestId!: Request;
 }
 
 export default User;

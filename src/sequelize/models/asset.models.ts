@@ -1,32 +1,36 @@
 /* eslint-disable import/no-cycle */
 import {
-  Column, BelongsTo, DataType, ForeignKey, Model, Table,
+  Column, BelongsTo, DataType, ForeignKey, HasOne, Model, Table,
 } from 'sequelize-typescript';
 
-import { Store } from './store.models';
+import { Institution } from './institution.models';
+import { User } from './user.models';
+import { AssetType } from './assetType.models';
+
 
 @Table({
   defaultScope: {
     attributes: { exclude: ['deletedAt'] },
   },
   paranoid: true,
-  tableName: 'assets',
+  tableName: 'Assets',
 })
 
 export class Asset extends Model<Asset> {
   @Column({
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
     type: DataType.INTEGER.UNSIGNED,
   })
-  id!: string;
+  serialNo!: string;
 
-  @Column({
-    allowNull: false,
-    type: DataType.STRING,
-  })
-  code!: string;
+  @ForeignKey(() => Institution)
+  @Column
+  institutionId!: number;
+
+  @ForeignKey(() => AssetType)
+  @Column
+  assetTypeId!: number;
 
   @Column({
     allowNull: false,
@@ -42,19 +46,75 @@ export class Asset extends Model<Asset> {
 
   @Column({
     allowNull: false,
+    type: DataType.DATE,
+  })
+  dataAcquired!: string;
+
+  @Column({
+    allowNull: false,
+    type: DataType.STRING,
+  })
+  source!: string;
+
+  @Column({
+    allowNull: false,
     type: DataType.STRING,
   })
   state!: string;
 
   @Column({
     allowNull: false,
+    type: DataType.BOOLEAN,
+  })
+  donated!: string;
+
+  @Column({
+    allowNull: false,
+    type: DataType.DATE,
+  })
+  warrantyEndDate!: string;
+
+  @Column({
+    allowNull: false,
     type: DataType.STRING,
   })
-  recyclable!: string
+  usageStatus!: string;
 
-  @ForeignKey(() => Store)
-  storeId!: number
+  @Column({
+    allowNull: false,
+    type: DataType.STRING,
+  })
+  healthStatus!: string
 
-  @BelongsTo(() => Store)
-  store!: Store
+  @Column({
+    allowNull: false,
+    type: DataType.STRING,
+  })
+  repairCost!: string
+
+  @Column({
+    allowNull: false,
+    type: DataType.BOOLEAN,
+  })
+  recyclable!: string;
+
+
+  @Column({
+    allowNull: false,
+    type: DataType.STRING,
+  })
+  assetImage!: string;
+
+  @ForeignKey(() => User)
+  @Column
+  userId!: number;
+
+  @BelongsTo(() => Institution)
+  institution!: Institution;
+
+  @BelongsTo(() => User)
+  user!: User;
+
+  @HasOne(() => AssetType, 'id')
+  assetType!: AssetType;
 }

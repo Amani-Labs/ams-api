@@ -1,7 +1,7 @@
-import { Store } from '../sequelize/models/store.models';
+import { Institution } from '../sequelize/models/institution.models';
 
 export const storeResolver = {
   Query: {
-    stores: () => Store.findAll(),
+    stores: () => Institution.findAll(),
   },
 };
