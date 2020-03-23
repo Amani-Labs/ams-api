@@ -1,11 +1,11 @@
 import { query } from './query.typedefs';
-import { mutation } from './mutation.typedefs';
+import allMutations from './mutations';
 import { allTypes } from './types';
 
 
 export const typeDefs = [
   query,
-  mutation,
+  allMutations.userMutation,
   allTypes.assetType,
   allTypes.storeType,
   allTypes.userType,

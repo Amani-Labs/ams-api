@@ -1,7 +1,11 @@
 import assetsResolver from './asset.resolvers';
-import { userResolver, createUserResolver } from './user.resolver';
+import { userResolver } from './user.resolver';
 import { storeResolver } from './store.resolvers';
 
-const resolvers = [assetsResolver, userResolver, storeResolver, createUserResolver];
+const resolvers = [
+  assetsResolver,
+  userResolver,
+  storeResolver,
+];
 
 export default resolvers;

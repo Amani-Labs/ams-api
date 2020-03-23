@@ -11,7 +11,7 @@ module.exports = {
       statements: 90,
     },
   },
-  coveragePathIgnorePatterns: ['./src/sequelize/models'],
+  coveragePathIgnorePatterns: ['./src/sequelize/models', '.src/config/connectDb.ts'],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   coverageReporters: ['json', 'lcov', 'text'],

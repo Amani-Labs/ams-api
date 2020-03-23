@@ -9,30 +9,38 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "yarn build-ts && yarn lint",
     "dev:watch": "nodemon -r ts-node src/index.ts",
-    "test": "NODE_ENV=test jest --coverage",
+    "test": "jest --coverage",
+    "pretest": "NODE_ENV=test yarn db:migrate:undo && NODE_ENV=test yarn db:migrate && NODE_ENV=test yarn db:seed:undo && NODE_ENV=test yarn db:seed",
     "db:migrate": "sequelize db:migrate",
-    "db:migrate:undo": "sequelize db:migrate:undo:all"
+    "db:migrate:undo": "sequelize db:migrate:undo:all",
+    "db:seed": "sequelize db:seed:all",
+    "db:seed:undo": "sequelize db:seed:undo:all"
   },
   "dependencies": {
+    "@hapi/joi": "15.0.3",
     "@types/bcrypt": "^3.0.0",
+    "@types/bluebird": "^3.5.29",
     "@types/dotenv": "^8.2.0",
+    "@types/hapi__joi": "15.0.3",
+    "@types/jsonwebtoken": "^8.3.8",
     "@types/node": "^13.7.6",
     "@types/redis": "^2.8.16",
-    "@types/bluebird": "^3.5.29",
-    "apollo-server": "^2.10.1",
     "@types/validator": "^12.0.1",
+    "apollo-server": "^2.10.1",
+    "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
     "eslint-plugin-react": "^7.18.3",
     "graphql": "^14.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.18.2",
+    "pg-hstore": "^2.3.3",
     "redis": "^3.0.2",
-    "typescript": "^3.8.2",
-    "winston": "^3.2.1",
+    "reflect-metadata": "^0.1.13",
     "sequelize": "^5.21.5",
     "sequelize-cli": "^5.5.1",
-    "reflect-metadata": "^0.1.13",
     "sequelize-typescript": "^1.1.0",
-    "pg": "^7.18.2",
-    "pg-hstore": "^2.3.3"
+    "typescript": "^3.8.2",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
@@ -41,8 +49,6 @@
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
     "babel-jest": "^25.1.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.8",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.10.0",
@@ -51,14 +57,19 @@
     "eslint-plugin-json": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.3",
     "jest": "^25.1.0",
+    "lint-staged": "^10.0.8",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "ts-jest": "^25.2.1",
     "ts-node": "^8.6.2"
   },
   "lint-staged": {
-      "src/**/*.(ts|js|tsx|jsx)": ["yarn lint", "git add"]
+    "src/**/*.(ts|js|tsx|jsx)": [
+      "yarn lint",
+      "git add"
+    ]
   },
   "husky": {
     "hooks": {
