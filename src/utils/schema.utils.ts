@@ -22,3 +22,12 @@ export const assetSchema = Joi.object().keys({
   assetImage: Joi.string(),
   assetCreatorId: Joi.number().required(),
 });
+
+export const emailSchema = Joi.object().keys({
+  email: Joi.string().email().required(),
+});
+
+export const resetPasswordSchema = Joi.object().keys({
+  password: Joi.string().required(),
+  confirmPassword: Joi.string().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } }),
+});

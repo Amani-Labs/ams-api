@@ -14,4 +14,8 @@ export const userType = gql`
     type Token {
         token: String
     }
+
+    type Message {
+        message: String
+    }
 `;

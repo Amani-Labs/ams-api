@@ -24,3 +24,15 @@ export const unHashPassword = (
   hashedPassword: string,
   compare: string,
 ) => bcrypt.compareSync(hashedPassword, compare);
+
+export const hashPassword = (password: string) => bcrypt.hashSync(password, 10);
+
+export const decodeToken = async (token: string): Promise<any> => {
+  const result = await jwt.verify(token, JWT_SECRET_KEY!, (error, decoded) => {
+    if (error) {
+      return error;
+    }
+    return decoded;
+  });
+  return result;
+};

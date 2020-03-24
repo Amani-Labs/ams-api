@@ -1,5 +1,7 @@
 import { userResolver } from '../user.resolver';
 import dbConnection from '../../config/connectDb';
+import { generateToken } from '../../utils/user.utils';
+import { Iuser } from '../../interfaces/user.interfaces';
 
 
 describe('Test User Resolver', () => {
@@ -49,6 +51,48 @@ describe('Test User Resolver', () => {
     } catch (error) {
       expect(error.constructor.name).toEqual('AuthenticationError');
       expect(error.message).toEqual(message);
+    }
+  });
+
+  // password reset
+  it('Should send an email to the user if exists', async () => {
+    const email = 'foobar@gmail.com';
+    const spy = jest.spyOn(userResolver.Mutation, 'sendResetPasswordEmail');
+    await userResolver.Mutation.sendResetPasswordEmail(null, { email });
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('Should not send an email if user email does not exists', async () => {
+    const email = 'wrong@gmail.com';
+    const message = 'User with this email does not exist';
+    try {
+      await userResolver.Mutation.sendResetPasswordEmail(null, { email });
+    } catch (error) {
+      expect(error.constructor.name).toEqual('AuthenticationError');
+      expect(error.message).toEqual(message);
+    }
+  });
+
+  it('Should reset password', async () => {
+    const password = 'butare';
+    const confirmPassword = 'butare';
+    const user = {
+      email: 'foobar@gmail.com',
+    };
+    const token = generateToken(user as Iuser);
+    const spy = jest.spyOn(userResolver.Mutation, 'sendResetPasswordEmail');
+    await userResolver.Mutation.resetPassword(null, { password, confirmPassword }, { token });
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('Should reset password', async () => {
+    const password = 'butare';
+    const confirmPassword = 'butare';
+    const token = 'invalid token';
+    try {
+      await userResolver.Mutation.resetPassword(null, { password, confirmPassword }, { token });
+    } catch (error) {
+      expect(error.constructor.name).toEqual('Error');
     }
   });
 });
