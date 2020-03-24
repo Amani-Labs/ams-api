@@ -3,7 +3,7 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('I
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
   },
   name: {
     allowNull: false,

@@ -10,6 +10,7 @@ export const typeDefs = [
   allMutations.assetMutation,
   allQueries.assetQueries,
   allTypes.assetType,
-  allTypes.storeType,
+  allTypes.institutionType,
   allTypes.userType,
+  allTypes.roleType,
 ];

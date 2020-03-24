@@ -5,7 +5,7 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('A
     type: DataTypes.STRING,
   },
   institutionId: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     references: {
       model: { tableName: 'Institutions' },
       key: 'id',
@@ -13,7 +13,7 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('A
     allowNull: false,
   },
   assetTypeId: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     references: {
       model: { tableName: 'AssetTypes' },
       key: 'id',
@@ -65,7 +65,7 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('A
     type: DataTypes.STRING,
   },
   assetCreatorId: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     references: {
       key: 'id',
       model: { tableName: 'Users' },

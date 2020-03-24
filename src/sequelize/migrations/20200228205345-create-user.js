@@ -3,7 +3,7 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('U
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
   },
   firstName: {
     allowNull: false,
@@ -24,6 +24,10 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('U
   password: {
     allowNull: false,
     type: DataTypes.STRING,
+  },
+  verified: {
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
   },
   createdAt: {
     allowNull: false,

@@ -18,7 +18,7 @@ export class Address extends Model<Address> {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataType.INTEGER.UNSIGNED,
+    type: DataType.INTEGER,
   })
   id!: string;
 

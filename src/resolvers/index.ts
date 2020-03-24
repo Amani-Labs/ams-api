@@ -1,11 +1,7 @@
 import assetsResolver from './asset.resolvers';
 import { userResolver } from './user.resolver';
-import { storeResolver } from './store.resolvers';
+import { institutionResolver } from './institution.resolvers';
 
-const resolvers = [
-  assetsResolver,
-  userResolver,
-  storeResolver,
-];
+const resolvers = [assetsResolver, userResolver, institutionResolver];
 
 export default resolvers;

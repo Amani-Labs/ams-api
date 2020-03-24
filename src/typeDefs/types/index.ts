@@ -1,11 +1,13 @@
 import { assetType } from './asset.types';
-import { storeType } from './store.types';
 import { userType } from './user.types';
+import { roleType } from './role.types';
+import { institutionType } from './institution.types';
 
 export const allTypes = {
   assetType,
-  storeType,
   userType,
+  institutionType,
+  roleType,
 };
 
 export default allTypes;

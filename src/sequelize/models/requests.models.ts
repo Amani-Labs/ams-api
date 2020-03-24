@@ -20,7 +20,7 @@ export class Request extends Model<Request> {
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
-    type: DataType.INTEGER.UNSIGNED,
+    type: DataType.INTEGER,
   })
   id!: string;
 
