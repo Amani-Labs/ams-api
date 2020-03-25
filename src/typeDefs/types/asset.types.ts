@@ -1,14 +1,40 @@
 import { gql } from 'apollo-server';
 
 export const assetType = gql`
-  # This "Asset" type defines the queryable fields for every asset in our data source.
+  enum AssetSource {
+    bought
+    donation
+    other
+  }
+
+  enum UsageStatus {
+    inuse
+    instorage
+    damagedstore
+    disposed
+  }
+  
+  enum HealthStatus {
+    damaged
+    repaired
+    goodcondition
+  }
+
   type Asset {
-    id: ID!
+    serialNo: ID!
+    institutionId: Int!
+    assetTypeId: Int!
     name: String!
-    code: ID!
-    description: String!
-    state: String!
+    description: String
+    dateAcquired: String!
+    source: AssetSource!
+    donated: Boolean!
+    warrantyEndDate: String!
+    usageStatus: UsageStatus!
+    healthStatus: HealthStatus!
+    repairCost: Float
     recyclable: Boolean!
-    storeId: ID!
+    assetImage: String
+    assetCreatorId: Int!
   }
 `;

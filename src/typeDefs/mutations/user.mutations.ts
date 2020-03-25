@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server';
 
 export const userMutation = gql`
-  type Mutation {
+  extend type Mutation {
     addUser(
       firstName: String!
       lastName: String!

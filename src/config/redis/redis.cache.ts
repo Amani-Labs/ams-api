@@ -1,5 +1,8 @@
 import Redis from 'redis';
+import winston from 'winston';
+import redisDeletePattern from 'redis-delete-pattern';
 import { promisify } from 'util';
+
 
 export class RedisCache {
   private client: Redis.RedisClient;
@@ -31,6 +34,13 @@ export class RedisCache {
 
   async delete(key: string) {
     return this.delAsync(key);
+  }
+
+  async deleteAllWithPattern(pattern: string) {
+    return redisDeletePattern({
+      redis: this.client,
+      pattern: `${pattern}:*`,
+    }, (err) => err);
   }
 
   async empty() {

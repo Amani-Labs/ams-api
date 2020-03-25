@@ -20,7 +20,7 @@ export class Asset extends Model<Asset> {
   @Column({
     allowNull: false,
     primaryKey: true,
-    type: DataType.INTEGER.UNSIGNED,
+    type: DataType.STRING,
   })
   serialNo!: string;
 
@@ -48,19 +48,13 @@ export class Asset extends Model<Asset> {
     allowNull: false,
     type: DataType.DATE,
   })
-  dataAcquired!: string;
+  dateAcquired!: string;
 
   @Column({
     allowNull: false,
     type: DataType.STRING,
   })
   source!: string;
-
-  @Column({
-    allowNull: false,
-    type: DataType.STRING,
-  })
-  state!: string;
 
   @Column({
     allowNull: false,
@@ -107,7 +101,7 @@ export class Asset extends Model<Asset> {
 
   @ForeignKey(() => User)
   @Column
-  userId!: number;
+  assetCreatorId!: number;
 
   @BelongsTo(() => Institution)
   institution!: Institution;

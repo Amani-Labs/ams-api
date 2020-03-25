@@ -2,7 +2,7 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('A
   serialNo: {
     allowNull: false,
     primaryKey: true,
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.STRING,
   },
   institutionId: {
     type: DataTypes.INTEGER.UNSIGNED,
