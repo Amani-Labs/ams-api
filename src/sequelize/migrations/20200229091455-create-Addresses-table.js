@@ -5,23 +5,23 @@ module.exports.up = (queryInterface, DataTypes) => queryInterface.createTable('A
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  Province: {
+  province: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  District: {
+  district: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Sector: {
+  sector: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Cell: {
+  cell: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Village: {
+  village: {
     type: DataTypes.STRING,
     allowNull: false,
   },

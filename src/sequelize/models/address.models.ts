@@ -26,31 +26,31 @@ export class Address extends Model<Address> {
     allowNull: false,
     type: DataType.STRING,
   })
-  Province!: string;
+  province!: string;
 
   @Column({
     allowNull: false,
     type: DataType.STRING,
   })
-  District!: string;
+  district!: string;
 
   @Column({
     allowNull: false,
     type: DataType.STRING,
   })
-  Sector!: string;
+  sector!: string;
 
   @Column({
     allowNull: false,
     type: DataType.STRING,
   })
-  Cell!: string;
+  cell!: string;
 
   @Column({
     allowNull: false,
     type: DataType.STRING,
   })
-  Village!: string;
+  village!: string;
 
   @HasMany(() => Institution)
   institutions!: Institution[]

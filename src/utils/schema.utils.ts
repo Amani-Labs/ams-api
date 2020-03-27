@@ -46,3 +46,20 @@ export const userSchema = Joi.object().keys({
   phoneNo: Joi.strict().required().not(''),
   institutionId: Joi.number().required(),
 });
+
+export const createAddressSchema = Joi.object().keys({
+  province: Joi.string().required().min(3),
+  district: Joi.string().required().min(3),
+  sector: Joi.string().required().min(3),
+  cell: Joi.string().required().min(3),
+  village: Joi.string().required().min(3),
+});
+
+export const updateAddressSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  province: Joi.string().min(3),
+  district: Joi.string().min(3),
+  sector: Joi.string().min(3),
+  cell: Joi.string().min(3),
+  village: Joi.string().min(3),
+});

@@ -1,10 +1,10 @@
 module.exports = {
   up: (queryInterface) => queryInterface.bulkInsert('Addresses', [{
-    Province: 'dddd',
-    District: 'dddddd',
-    Sector: 'ssssss',
-    Cell: 'aaafdd',
-    Village: 'sfasdfe',
+    province: 'dddd',
+    district: 'dddddd',
+    sector: 'ssssss',
+    cell: 'aaafdd',
+    village: 'sfasdfe',
     createdAt: new Date(),
     updatedAt: new Date(),
   }], {}),
