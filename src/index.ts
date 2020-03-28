@@ -1,13 +1,12 @@
 import { ApolloServer } from 'apollo-server';
-import winston from 'winston';
 import dotenv from 'dotenv';
 import resolvers from './resolvers';
 import { typeDefs } from './typeDefs';
 import { logger } from './config/logging';
 import './config/connectDb';
 
+
 dotenv.config();
-logger();
 
 const server = new ApolloServer({
   typeDefs,
@@ -18,5 +17,5 @@ const server = new ApolloServer({
 });
 
 server.listen({ port: process.env.PORT }).then(({ url }) => {
-  winston.info(`🚀  Server ready at ${url}`);
+  logger.info(`🚀  Server ready at ${url}`);
 });

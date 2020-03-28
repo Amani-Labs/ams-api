@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import 'dotenv/config';
-import winston from 'winston';
+import { logger } from './logging';
 import { models } from '../sequelize/models';
 
 
@@ -20,9 +20,9 @@ const sequelize = new Sequelize(db!, {
 const verify = async () => {
   try {
     await sequelize.authenticate();
-    winston.info('Connection has been established successfully.');
+    logger.info('Connection has been established successfully.');
   } catch (error) {
-    winston.error('Unable to connect to the database:', error);
+    logger.error('Unable to connect to the database:', error);
   }
 };
 

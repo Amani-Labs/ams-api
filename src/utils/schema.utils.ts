@@ -63,3 +63,13 @@ export const updateAddressSchema = Joi.object().keys({
   cell: Joi.string().min(3),
   village: Joi.string().min(3),
 });
+
+export const requestInputSchema = Joi.object().keys({
+  requestType: Joi.string().strict().not('').required(),
+  assetTypeId: Joi.number().required(),
+  numberOfItems: Joi.number().required(),
+  requestedTo: Joi.number().required(),
+  reason: Joi.string().strict().not(''),
+  adminComment: Joi.string().strict().not(''),
+  superAdminComment: Joi.string().strict().not(''),
+});

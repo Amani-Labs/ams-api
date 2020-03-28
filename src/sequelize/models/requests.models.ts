@@ -35,10 +35,16 @@ export class Request extends Model<Request> {
   assetTypeId!: number;
 
   @Column({
-    allowNull: false,
+    defaultValue: 'pending',
     type: DataType.STRING,
   })
   status!: string;
+
+  @Column({
+    defaultValue: 'pending',
+    type: DataType.ARRAY(DataType.JSON),
+  })
+  assignedAdmins!: string;
 
   @Column({
     allowNull: false,
@@ -62,16 +68,14 @@ export class Request extends Model<Request> {
     allowNull: false,
     type: DataType.TEXT,
   })
-  requesterReason!: string
+  reason!: string
 
   @Column({
-    allowNull: false,
     type: DataType.TEXT,
   })
   adminComment!: string;
 
   @Column({
-    allowNull: false,
     type: DataType.TEXT,
   })
   superAdminComment!: string;

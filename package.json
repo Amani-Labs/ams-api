@@ -14,7 +14,8 @@
     "db:migrate": "sequelize db:migrate",
     "db:migrate:undo": "sequelize db:migrate:undo:all",
     "db:seed": "sequelize db:seed:all",
-    "db:seed:undo": "sequelize db:seed:undo:all"
+    "db:seed:undo": "sequelize db:seed:undo:all",
+    "db:setup": "yarn db:migrate && yarn db:seed"
   },
   "dependencies": {
     "@hapi/joi": "15.0.3",
