@@ -11,5 +11,7 @@ export const userMutation = gql`
       avatar: String!
     ): User
     loginUser(email: String!, password: String!): Token
+    sendResetPasswordEmail(email: String!): Message
+    resetPassword(password: String!, confirmPassword: String!): Message
   }
 `;

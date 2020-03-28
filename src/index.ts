@@ -13,6 +13,9 @@ logger();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => ({
+    token: req.headers.authorization,
+  }),
 });
 
 server.listen({ port: process.env.PORT }).then(({ url }) => {
