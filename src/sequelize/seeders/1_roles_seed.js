@@ -1,15 +1,20 @@
 module.exports = {
   up: (queryInterface) => queryInterface.bulkInsert('Roles', [
     {
-      name: 'admin',
-      description: 'admin level',
+      name: 'superAdmin',
+      description: 'this is the super-admin',
       createdAt: new Date(),
       updatedAt: new Date(),
-      deletedAt: new Date(),
     },
     {
-      name: 'super-admin',
-      description: 'super admin level',
+      name: 'admin',
+      description: 'this is the admin',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      name: 'normalUser',
+      description: 'this is a normal user',
       createdAt: new Date(),
       updatedAt: new Date(),
     },

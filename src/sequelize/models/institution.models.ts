@@ -19,7 +19,7 @@ export class Institution extends Model<Institution> {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataType.INTEGER.UNSIGNED,
+    type: DataType.INTEGER,
   })
   id!: string;
 

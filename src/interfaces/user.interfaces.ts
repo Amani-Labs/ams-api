@@ -4,14 +4,18 @@ export interface IloginData {
 }
 
 export interface Iuser {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
   password: string;
   gender: string;
+  verified: boolean;
   profilePic: string;
   roleId?: number;
   institutionId?: number;
+}
+export interface Token {
+  token: string;
 }

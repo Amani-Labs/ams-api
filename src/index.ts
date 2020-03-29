@@ -6,7 +6,6 @@ import { typeDefs } from './typeDefs';
 import { logger } from './config/logging';
 import './config/connectDb';
 
-
 dotenv.config();
 logger();
 

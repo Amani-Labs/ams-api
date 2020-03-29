@@ -1,3 +1,4 @@
 import resetPassword from './reset.password';
+import verifyEmail from './email.verification';
 
-export { resetPassword };
+export { resetPassword, verifyEmail };

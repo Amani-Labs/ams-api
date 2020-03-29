@@ -20,7 +20,7 @@ export class User extends Model<User> {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataType.INTEGER.UNSIGNED,
+    type: DataType.INTEGER,
   })
   id!: string;
 
@@ -60,7 +60,9 @@ export class User extends Model<User> {
 
   @Column({
     allowNull: false,
-    type: DataType.STRING,
+    type: DataType.ENUM,
+    values: ['male', 'female', 'trans'],
+    defaultValue: 'male',
   })
   gender!: string;
 
@@ -69,6 +71,13 @@ export class User extends Model<User> {
     type: DataType.STRING,
   })
   phoneNo!: string;
+
+  @Column({
+    allowNull: false,
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  verified!: string;
 
   @Column({
     allowNull: true,

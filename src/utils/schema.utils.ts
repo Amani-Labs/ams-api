@@ -30,4 +30,19 @@ export const emailSchema = Joi.object().keys({
 export const resetPasswordSchema = Joi.object().keys({
   password: Joi.string().required(),
   confirmPassword: Joi.string().valid(Joi.ref('password')).required().options({ language: { any: { allowOnly: 'must match password' } } }),
+
+});
+
+export const userSchema = Joi.object().keys({
+  roleId: Joi.number().required(),
+  firstName: Joi.strict().required().not(''),
+  lastName: Joi.strict().required().not(''),
+  userName: Joi.string().alphanum().min(3).max(30)
+    .required()
+    .not(''),
+  email: Joi.string().email().not(''),
+  password: Joi.string().regex(/[a-zA-Z0-9]/).not(''),
+  gender: Joi.strict().required().not(''),
+  phoneNo: Joi.strict().required().not(''),
+  institutionId: Joi.number().required(),
 });

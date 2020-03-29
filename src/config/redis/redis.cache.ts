@@ -1,5 +1,4 @@
 import Redis from 'redis';
-import winston from 'winston';
 import redisDeletePattern from 'redis-delete-pattern';
 import { promisify } from 'util';
 

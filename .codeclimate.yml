@@ -2,4 +2,6 @@ version: "2"
 exclude_patterns:
   - "**/node_modules"
   - "**/*.spec.ts"
+  - "**/__mocks__/*"
   - "./src/sequelize/*"
+  - "./src/utils/mailer/templates/*"
