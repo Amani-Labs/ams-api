@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import 'dotenv/config';
-import { ApolloError } from 'apollo-server';
+import { ApolloError, ForbiddenError } from 'apollo-server';
 import { Iuser } from '../interfaces/user.interfaces';
+import { Role } from '../sequelize/models/role.models';
 
 const { JWT_SECRET_KEY } = process.env;
 
@@ -29,13 +30,49 @@ export const unHashPassword = (
 
 export const hashPassword = (password: string) => bcrypt.hashSync(password, 10);
 
-export const decodeToken = async (token: string): Promise<any> => {
-  if (!token) throw new ApolloError('Unauthorized access', '401');
-  const result = await jwt.verify(token, JWT_SECRET_KEY!, (error, decoded) => {
-    if (error) throw new ApolloError(`${error.name}: ${error.message}`, '400');
-    return decoded;
+export const decodeToken = async (token: string) => {
+  let user;
+  await jwt.verify(token, JWT_SECRET_KEY!, (error, decoded) => {
+    if (error) {
+      throw new ApolloError('Please login to proceed!!');
+    }
+    user = decoded;
   });
-  return result;
+  return user;
+};
+export const checkSingleRole = async (role, requiredRole) => {
+  if (role!.name !== requiredRole) {
+    throw new ForbiddenError('Sorry you\'re not authorized to perform this action');
+  }
+  return true;
+};
+
+export const checkCombinedRoles = async (role, requiredRole) => {
+  if (!Array.isArray(requiredRole)) {
+    throw new ApolloError('Sorry supply a valid role');
+  }
+  if (!requiredRole.includes(role.name)) {
+    throw new ForbiddenError('Sorry you\'re not authorized to perform this action');
+  }
+};
+
+export const checkUserRole = async (token, requiredRole) => {
+  const { roleId } = await decodeToken(token);
+  // Update this method to use role-service .
+  const role = await Role.findOne({ where: { id: roleId } });
+  if (typeof requiredRole === 'string') {
+    await checkSingleRole(role, requiredRole);
+  } else {
+    await checkCombinedRoles(role, requiredRole);
+  }
+};
+
+export const userGroup = {
+  admins: ['superAdmin', 'admin'],
+  users: ['superAdmin', 'admin', 'normalUser'],
+  superAdmin: 'superAdmin',
+  admin: 'admin',
+  user: 'normalUser',
 };
 export async function returnResult(results) {
   const token = await generateToken(results);

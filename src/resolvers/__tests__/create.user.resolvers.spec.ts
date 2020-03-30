@@ -119,7 +119,7 @@ describe('Test user', () => {
   it('should update a user by super-admin', async () => {
     const spy = jest.spyOn(userResolver.Mutation, 'updateUser');
     const res = await userResolver.Mutation.updateUser(null,
-      { id: 1, input: updateSuperAdminInput }, superAdminToken);
+      { id: 5, input: updateSuperAdminInput }, superAdminToken);
     expect(spy).toHaveBeenCalled();
     expect(res.email).toEqual('updatedemail@gmail.com');
   });
@@ -179,7 +179,7 @@ describe('Test user', () => {
     const spy = jest.spyOn(userResolver.Query, 'users');
     const res = await userResolver.Query.users(null, { });
     expect(spy).toHaveBeenCalled();
-    expect(res[0].id).toBe(2);
+    expect(res[0].id).toBe(1);
   });
 
   it('should return all users from redis', async () => {

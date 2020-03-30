@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "yarn build-ts && yarn lint",
     "dev:watch": "nodemon -r ts-node src/index.ts",
-    "test": "jest --coverage",
+    "test": "jest --coverage --runInBand --forceExit",
     "pretest": "NODE_ENV=test yarn db:migrate:undo && NODE_ENV=test yarn db:migrate && NODE_ENV=test yarn db:seed:undo && NODE_ENV=test yarn db:seed",
     "db:migrate": "sequelize db:migrate",
     "db:migrate:undo": "sequelize db:migrate:undo:all",
@@ -69,10 +69,7 @@
     "ts-node": "^8.6.2"
   },
   "lint-staged": {
-    "src/**/*.(ts|js|tsx|jsx)": [
-      "yarn lint",
-      "git add"
-    ]
+    "src/**/*.(ts|js|tsx|jsx)": "yarn lint"
   },
   "husky": {
     "hooks": {
